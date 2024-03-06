@@ -1,6 +1,7 @@
 // const Blog = require('../models/blog');
 const { response } = require('express');
 const commonFunctions = require('../commonFunctions');
+const jsonData = require('../sortedDeliData.json');
 
 module.exports = {
   api: async (req, res) => {
@@ -12,15 +13,35 @@ module.exports = {
 
     
           
-      let summarizationText = await commonFunctions.anythingLLMApi({workspace:"sorted-2", token:"1RNFA0J-Q00MFDD-ND9BBHY-W3JH3SQ",userQuery:userQuery});
-
+      let summarizationText = await commonFunctions.anythingLLMApi({workspace:"sorted", token:"4K656AJ-CT34AV9-KRKHQ3X-VF92Z4Z",userQuery:userQuery});
       console.log("summarizationText====", summarizationText)
-      let URLs = await commonFunctions.anythingLLMApiQuery({workspace:"sorted-urls", token:"1RNFA0J-Q00MFDD-ND9BBHY-W3JH3SQ", userQuery:userQuery, summarizationText:summarizationText })
+      let newText = commonFunctions.convertToJson(summarizationText);
+
+      let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: "sortedshopurls", token: "4K656AJ-CT34AV9-KRKHQ3X-VF92Z4Z", userQuery: userQuery, summarizationText: newText.message })
+
+      let foundUrlsInfo = [];
+
+      if (URLs && Array.isArray(URLs)) {
+        URLs.forEach(url => {
+          const foundItem = jsonData.find(item => item.url === url);
+          if (foundItem) {
+            foundUrlsInfo.push({
+              url: url,
+              title: foundItem.title,
+              product: foundItem.product,
+              productDescription: foundItem.productDescription,
+              productImg: foundItem.productImg
+            });
+          }
+        });
+      }
 
       let object = {
-        userQuery : userQuery,
-        summarizationText: summarizationText,
-        URLs : URLs
+        userQuery: userQuery,
+        summarizationText: newText.message,
+        products: foundUrlsInfo,
+        followup: newText.followup,
+        // URLs: URLs
       }
        return res.status(200).json(object)
      

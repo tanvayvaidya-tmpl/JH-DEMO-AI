@@ -36,9 +36,9 @@ module.exports = {
     let userQuery = Props.userQuery;
     let summarizationText = Props.summarizationText;
 
-    let LLMquery = 'based on the user query below and the summarization text provided below give an array of at most 8 URLs that corresponds to them in the format [ "url","url","url","url"]' + '\n user Query: '+userQuery+ '\n summarizationText: ' + summarizationText
+    let LLMquery = 'Based on the user query below and the summarisation text provided below give an array of at most 4 URLs that corresponds to them in the format: ["url", "url", "url"] only return the URLs and only if they exist. Only return array and nothing else.' + '\n user Query: '+userQuery+ '\n summarizationText: ' + summarizationText
 
-
+    console.log(LLMquery)
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
@@ -61,7 +61,7 @@ module.exports = {
       requestOptions
     );
     data = await responce.json();
-    console.log(data.textResponse)
+    // console.log(data)
     let URLArray = await JSON.parse(data.textResponse)
     return URLArray;
   },
@@ -72,7 +72,6 @@ module.exports = {
     let summarizationText = Props.summarizationText;
 
     let LLMquery = 'based on the user query below and the summarization text provided below give an array of at most 8 URLs that corresponds to them in the format [ "url","url","url","url"]' + '\n user Query: '+userQuery+ '\n summarizationText: ' + summarizationText
-
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -99,4 +98,7 @@ module.exports = {
 
     return (URLArray)
   },
+  convertToJson: (string) => {
+  return JSON.parse(string);
+}
 };
