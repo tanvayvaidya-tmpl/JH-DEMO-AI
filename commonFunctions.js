@@ -7,9 +7,10 @@ module.exports = {
     let token = Props.token;
     let userQuery = Props.userQuery;
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
+    var myHeaders = {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
 
     var raw = JSON.stringify({
       message: userQuery,
@@ -43,9 +44,11 @@ module.exports = {
 
     console.log(LLMquery)
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
+    var myHeaders = {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
+  
 
     var raw = JSON.stringify({
       message: LLMquery,
