@@ -20,7 +20,7 @@ module.exports = {
           break;
         case "Sorted":
           workspaceObject.first = 'sorted';
-          workspaceObject.second = 'sortedshopurls';
+          workspaceObject.second = 'sorted-urls';
           break;
         default:
           break;
@@ -30,11 +30,11 @@ module.exports = {
     if (req.body.userQuery) {
       let userQuery = req.body.userQuery;
           
-      let summarizationText = await commonFunctions.anythingLLMApi({ workspace: workspaceObject.first, token:"4K656AJ-CT34AV9-KRKHQ3X-VF92Z4Z",userQuery:userQuery});
+      let summarizationText = await commonFunctions.anythingLLMApi({ workspace: workspaceObject.first, token:"760DK0D-17546S9-G5SEG6V-HY3PXDM",userQuery:userQuery});
       console.log("summarizationText====", summarizationText)
       let newText = commonFunctions.convertToJson(summarizationText);
 
-      let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: workspaceObject.second, token: "4K656AJ-CT34AV9-KRKHQ3X-VF92Z4Z", userQuery: userQuery, summarizationText: newText.message })
+      let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: workspaceObject.second, token: "760DK0D-17546S9-G5SEG6V-HY3PXDM", userQuery: userQuery, summarizationText: newText.message })
 
       console.log(URLs, "----URLS----")
 
