@@ -36,6 +36,8 @@ module.exports = {
 
       let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: workspaceObject.second, token: "4K656AJ-CT34AV9-KRKHQ3X-VF92Z4Z", userQuery: userQuery, summarizationText: newText.message })
 
+      console.log(URLs, "----URLS----")
+
       let productUrls = await commonFunctions.findUrls(URLs, req.body.clientId);
 
       let object = {

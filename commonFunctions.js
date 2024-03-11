@@ -7,9 +7,10 @@ module.exports = {
     let token = Props.token;
     let userQuery = Props.userQuery;
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
+    var myHeaders = {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
 
     var raw = JSON.stringify({
       message: userQuery,
@@ -43,9 +44,10 @@ module.exports = {
 
     console.log(LLMquery)
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
+    var myHeaders = {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
 
     var raw = JSON.stringify({
       message: LLMquery,
@@ -64,9 +66,14 @@ module.exports = {
       requestOptions
     );
     data = await responce.json();
-    // console.log(data)
-    let URLArray = await JSON.parse(data.textResponse)
-    return URLArray;
+    console.log(data, "-----data----")
+    let URLArray = [];
+    try {
+      URLArray = JSON.parse(data.textResponse);
+      return URLArray;
+    } catch (error) {
+      return [];
+    }
   },
 
   convertToJson: (string) => {
@@ -99,11 +106,43 @@ module.exports = {
             "productDescription": "",
             "productImg": "https://res.cloudinary.com/tmplwebsite/image/upload/v1699679636/Bannertimes_487e91fc67.webp"
         },
+        {
+          "title": "Vodafone Oman  Together we can  Tunica Tech",
+          "url": "https://www.tunica.tech/projects/vodafone-oman-together-we-can",
+          "image": "",
+          "product": "Vodafone Oman",
+          "productDescription": "",
+          "productImg": "https://res.cloudinary.com/tmplwebsite/image/upload/v1636696270/Vodafone_Oman_Banner_7fb74dbd1f.webp"
+        },
+        {
+          "title": "Purl – Shorten your links with Purl  Tunica Tech",
+          "url": "https://www.tunica.tech/projects/purl",
+          "image": "",
+          "product": "Purl",
+          "productDescription": "",
+          "productImg": "https://res.cloudinary.com/tmplwebsite/image/upload/v1636692800/Purl_Banner_5071240170.webp"
+        },
       ]
         break;
       case "Sorted":
         // Change jsonData to sortedData or any other source specific to Sorted client
         clientSpecificData = sortedData;
+        defaultData = [{
+          "title": "Spinach Roti  Grain Free | Gluten Free | Only 25gms Net Carbs  Sorted",
+          "url": "https://www.sorteddeli.com/shop/spinach-roti-pack-of-5/",
+          "image": "",
+          "product": "Spinach Roti – Grain Free | Gluten Free | Only 25gms Net Carbs",
+          "productDescription": "Add Greens to your diet with the Sorted Spinach Roti A Gluten Free Grain Free and Guilt Free Roti that is a great replacement to Palak Paratha and Wheat Rotis Not that just it is also perfect for Keto and Paleo Diet along with many more",
+          "productImg": "https://www.sorteddeli.com/wp-content/uploads/2021/09/spinach-roti-1-445x445.jpg"
+        },
+        {
+          "title": "Buckwheat Pizza Crust 10\"  Sorted",
+          "url": "https://www.sorteddeli.com/shop/buckwheat-pizza-crust-10-pack-of-3/",
+          "image": "",
+          "product": "Buckwheat Pizza Crust 10″",
+          "productDescription": "Sorted Buckwheat Pizza Crust | The best Gluten Free Pizza Crust for Starters | Tastes the same at Whole Wheat Pizza with No Gluten and definitely no guilt",
+          "productImg": "https://www.sorteddeli.com/wp-content/uploads/2021/09/buckwheat-crust-445x445.jpg"
+        }]
         break;
       default:
         break;
@@ -122,6 +161,10 @@ module.exports = {
           });
         }
       });
+    }
+
+    if (!foundUrlsInfo.length) {
+      foundUrlsInfo = defaultData;
     }
 
     return foundUrlsInfo || [];
