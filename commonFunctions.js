@@ -1,6 +1,6 @@
 const sortedData = require('./sortedDeliData.json');
 const tunicaData = require('./tunicaData.json');
-import fetch from 'node-fetch';
+
 
 module.exports = {
   anythingLLMApi: async (Props) => {
