@@ -26,7 +26,7 @@ module.exports = {
     };
 
     const responce = await fetch(
-      "http://localhost:3001/api/v1/workspace/" + workspace + "/chat",
+      "http://192.168.1.48:3001/api/v1/workspace/" + workspace + "/chat",
       requestOptions
     );
     data = await responce.json();
@@ -63,7 +63,7 @@ module.exports = {
     };
 
     const responce = await fetch(
-      "http://localhost:3001/api/v1/workspace/" + workspace + "/chat",
+      "http://192.168.1.48:3001/api/v1/workspace/" + workspace + "/chat",
       requestOptions
     );
     data = await responce.json();
