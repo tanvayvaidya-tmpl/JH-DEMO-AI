@@ -4,8 +4,6 @@ const commonFunctions = require('../commonFunctions');
 
 module.exports = {
   api: async (req, res) => {
-    console.log(req.body.userQuery);
-    console.log("hi");
 
     let workspaceObject = {
       first: 'sorted',
@@ -19,8 +17,12 @@ module.exports = {
           workspaceObject.second = 'tunicaurls';
           break;
         case "Sorted":
-          workspaceObject.first = 'sorted';
-          workspaceObject.second = 'sorted-urls';
+          workspaceObject.first = 'sorted-chroma-db';
+          workspaceObject.second = 'sorted-all-urls';
+          break;
+        case "JamesHardie":
+          workspaceObject.first = 'james-hardie-data';
+          workspaceObject.second = 'james-hardie-urls';
           break;
         default:
           break;
@@ -29,12 +31,11 @@ module.exports = {
 
     if (req.body.userQuery) {
       let userQuery = req.body.userQuery;
-          
-      let summarizationText = await commonFunctions.anythingLLMApi({ workspace: workspaceObject.first, token:"760DK0D-17546S9-G5SEG6V-HY3PXDM",userQuery:userQuery});
-      console.log("summarizationText====", summarizationText)
+
+      let summarizationText = await commonFunctions.anythingLLMApi({ workspace: workspaceObject.first, token: "RECYBCY-AYBM728-J0CWTQQ-WW2H84G", userQuery: userQuery, client: req.body.clientId });
       let newText = commonFunctions.convertToJson(summarizationText);
 
-      let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: workspaceObject.second, token: "760DK0D-17546S9-G5SEG6V-HY3PXDM", userQuery: userQuery, summarizationText: newText.message })
+      let URLs = await commonFunctions.anythingLLMApiQuery({ workspace: workspaceObject.second, token: "RECYBCY-AYBM728-J0CWTQQ-WW2H84G", userQuery: userQuery, summarizationText: newText.message })
 
       console.log(URLs, "----URLS----")
 
@@ -45,10 +46,10 @@ module.exports = {
         summarizationText: newText.message,
         products: productUrls,
         followup: newText.followup,
-        // URLs: URLs
+        URLs: URLs
       }
-       return res.status(200).json(object)
-     
+      return res.status(200).json(object)
+
     }
   },
 };
