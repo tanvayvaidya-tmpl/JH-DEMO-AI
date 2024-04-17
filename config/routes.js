@@ -1,6 +1,5 @@
 const blogRouter=require("../routes/AI");
 
-module.exports=function(app){
-app.use('/',blogRouter);
-
+module.exports = function (app) {
+    app.use("/", blogRouter);
 }

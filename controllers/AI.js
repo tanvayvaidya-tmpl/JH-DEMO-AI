@@ -53,8 +53,6 @@ module.exports = {
     }
   },
   healthCheck: async (req, res) => {
-    return "Server is working!!!!"
+    return res.status(200).send("Server is Working!!!!")
   }
 };
-
-// module.exports =blogController;
