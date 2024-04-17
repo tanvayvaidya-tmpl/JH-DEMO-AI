@@ -52,6 +52,9 @@ module.exports = {
 
     }
   },
+  healthCheck: async (req, res) => {
+    return "Server is working!!!!"
+  }
 };
 
 // module.exports =blogController;
